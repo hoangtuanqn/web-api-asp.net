@@ -14,6 +14,8 @@ namespace ShopDBProduct.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Chuyển thành chữ thường
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 // table name
