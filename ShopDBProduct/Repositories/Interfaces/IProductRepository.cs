@@ -5,7 +5,7 @@ namespace ShopDBProduct.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        // cái chỗ này nó trả về thẳng product luôn
+
         Task<List<Product>> GetAllAsync();
         Task<Product?> GetDetailByIdAsync(int id);
         Task<Product> CreateAsync(Product product);

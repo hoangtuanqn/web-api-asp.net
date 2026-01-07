@@ -57,6 +57,8 @@ namespace ShopDBProduct.Services.Implementations
             product.Name = dto.Name;
             product.Price = dto.Price;
             product.Quantity = dto.Quantity;
+            _repo.Update(product);
+            await _repo.SaveChangesAsync();
             return MapToDto(product);
         }
 

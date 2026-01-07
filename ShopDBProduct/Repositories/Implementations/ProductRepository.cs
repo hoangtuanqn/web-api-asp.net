@@ -20,6 +20,7 @@ namespace ShopDBProduct.Repositories.Implementations
 
         async Task<bool> IProductRepository.DeleteAsync(int id)
         {
+            // ExecuteDeleteAsync: thực thi trực tiếp xún DB luôn
             var result = await _context.Products.Where(p => p.Id == id).ExecuteDeleteAsync();
             return result > 0;
         }
