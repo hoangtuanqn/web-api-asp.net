@@ -1,6 +1,4 @@
-﻿
-
-namespace ShopDBProduct.Services
+﻿namespace ShopDBProduct.Services.Implementations
 {
     public class CategoryService
     {
