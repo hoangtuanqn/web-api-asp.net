@@ -1,4 +1,6 @@
-﻿namespace ShopDBProduct.Entities
+﻿
+
+namespace ShopDBProduct.Entities
 {
     public class Product
     {

@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ShopDBProduct.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +10,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var connectionString = builder.Configuration.GetConnectionString("ConnectDB");
+var serverVersion = ServerVersion.AutoDetect(connectionString);
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, serverVersion));
+
+
+
+
+
 var app = builder.Build();
+
+// Get Connect String
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

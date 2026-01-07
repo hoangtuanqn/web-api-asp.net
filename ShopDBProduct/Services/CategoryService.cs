@@ -13,7 +13,7 @@ namespace ShopDBProduct.Services
 
             builder.Property(c => c.Name).IsRequired().HasMaxLength(255);
             builder.Property(c => c.Description).IsRequired().HasMaxLength(255);
-            builder.Property(c => c.Status).IsRequired(false).HasDefaultValue(false);
+            //builder.Property(c => c.Status).IsRequired(false).HasDefaultValue(false);
             builder
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category)
