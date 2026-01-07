@@ -1,17 +1,18 @@
 ﻿using ShopDBProduct.Entities;
+using ShopDBProduct.Migrations;
 
-namespace ShopDBProduct.Repositories.Implementations
+namespace ShopDBProduct.Repositories.Interfaces
 {
     public interface IProductRepository
     {
         // cái chỗ này nó trả về thẳng product luôn
         Task<List<Product>> GetAllAsync();
         Task<Product?> GetDetailByIdAsync(int id);
+        Task<Product> CreateAsync(Product product);
+        void Update(Product product);
         Task<bool> DeleteAsync(int id);
-        Task<Product> UpdateByIdAsync(Product product);
-        Task CreateAsync(Product product);
 
 
-        Task SaveChangesAsync();
+        Task<bool> SaveChangesAsync();
     }
 }
