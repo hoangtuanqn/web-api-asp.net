@@ -5,7 +5,7 @@ using ShopDBProduct.Services.Interfaces;
 
 namespace ShopDBProduct.Controllers
 {
-   
+
     [Route("api/v1/categories")]
     public class CategoryControllers : BaseApiController
     {
@@ -29,22 +29,9 @@ namespace ShopDBProduct.Controllers
 
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                var category = await _service.GetDetailByIdAsync(id);
-                return Ok(category);
-            }
-            catch (ArgumentException ex)
-            {
-                return NotFound(new { message = ex.Message });
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, new { message = "Đã xảy ra lỗi từ hệ thống" });
-            }
-
+            var category = await _service.GetDetailByIdAsync(id);
+            return Ok(category);
         }
 
         [HttpPost]

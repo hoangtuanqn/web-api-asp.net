@@ -1,10 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using ShopDBProduct;
-using ShopDBProduct.Data;
-using ShopDBProduct.Repositories.Implementations;
-using ShopDBProduct.Repositories.Interfaces;
-using ShopDBProduct.Services.Implementations;
-using ShopDBProduct.Services.Interfaces;
+using ShopDBProduct.Middlewares;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +19,10 @@ builder.Services.AddApplicationServices();
 
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+//app.UseHttpsRedirection(); // https
 
 // Get Connect String
 
