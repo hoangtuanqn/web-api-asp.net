@@ -6,7 +6,8 @@ namespace ShopDBProduct.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var products = await _service.GetAllAsync();
+            return Ok(products);
         }
     }
 }
