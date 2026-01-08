@@ -5,7 +5,7 @@ namespace ShopDBProduct.Repositories.Interfaces
     public interface ICategoryRepository
     {
         Task<List<Category>> GetAllAsync();
-        Task<List<Category>?> GetByIdWithProductsAsync(int id);
+        Task<Category?> GetByIdWithProductsAsync(int id);
         Task<Category?> GetByIdAsync(int id);
         Task<Category> CreateAsync(Category category);
         void Update(Category category);

@@ -11,7 +11,7 @@ using ShopDBProduct.Data;
 namespace ShopDBProduct.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260107164837_ProductDB")]
+    [Migration("20260108102450_ProductDB")]
     partial class ProductDB
     {
         /// <inheritdoc />

@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using ShopDBProduct;
-using ShopDBProduct.Data;
+using ShopDBProduct.Middlewares;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,16 +11,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("ConnectDB");
-var serverVersion = ServerVersion.AutoDetect(connectionString);
-
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, serverVersion));
+builder.Services.AddApplicationInfrastructure(builder.Configuration);
+builder.Services.AddApplicationServices();
 
 
 
 
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+//app.UseHttpsRedirection(); // https
 
 // Get Connect String
 

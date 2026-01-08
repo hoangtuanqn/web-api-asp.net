@@ -1,13 +1,14 @@
-﻿using ShopDBProduct.DTOs.Products;
+﻿using ShopDBProduct.DTOs.Categories;
+using ShopDBProduct.DTOs.Products;
 
 namespace ShopDBProduct.Services.Interfaces
 {
     public interface ICategoryService
     {
-        public Task<IEnumerable<ProductDto>> GetAllAsync();
-        public Task<ProductDto?> GetDetailByIdAsync(int id);
-        public Task<ProductDto> UpdateByIdAsync(UpdateProductDto product);
-        public Task<ProductDto> CreateAsync(CreateProductDto product);
+        public Task<IEnumerable<CategoryDto>> GetAllAsync();
+        public Task<CategoryDetailDto?> GetDetailByIdAsync(int id);
+        public Task<CategoryDto> UpdateByIdAsync(UpdateProductDto product);
+        public Task<CategoryDto> CreateAsync(CreateCategoryDto product);
         public Task<bool?> DeleteAsync(int id);
     }
 }
