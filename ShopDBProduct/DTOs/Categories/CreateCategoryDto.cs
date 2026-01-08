@@ -2,12 +2,10 @@
 
 namespace ShopDBProduct.DTOs.Categories
 {
-    public class CategoryDetailDto
+    public class CreateCategoryDto
     {
-        public int Id { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
         public bool Status { get; set; } = false;
-        public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

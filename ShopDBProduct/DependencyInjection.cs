@@ -7,14 +7,14 @@ using ShopDBProduct.Services.Interfaces;
 
 namespace ShopDBProduct
 {
-    // phải là dạng static: là nơi chứa DI
+    // phải là dạng static vì nó là method extends
     public static class DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
           
             services.AddScoped<IProductService, ProductService>();
-            //services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             return services;
         }
 

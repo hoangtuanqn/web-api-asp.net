@@ -4,3 +4,7 @@ GET {{ShopDBProduct_HostAddress}}/
 Accept: application/json
 
 ###
+
+GET {{ShopDBProduct_HostAddress}}/api/v1/products
+
+###

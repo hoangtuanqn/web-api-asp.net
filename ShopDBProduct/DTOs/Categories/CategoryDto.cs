@@ -1,12 +1,12 @@
-﻿namespace ShopDBProduct.Entities
+﻿
+namespace ShopDBProduct.DTOs.Categories
 {
-
-    public class Category
+    public class CategoryDto
     {
         public int Id { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
         public bool Status { get; set; } = false;
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+
     }
 }
