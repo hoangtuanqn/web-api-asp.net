@@ -18,7 +18,6 @@ namespace ShopDBProduct.Controllers
         }
 
         [HttpGet]
-
         public async Task<IActionResult> Index()
         {
             var categories = await _service.GetAllAsync();
@@ -39,6 +38,13 @@ namespace ShopDBProduct.Controllers
         {
             var category = await _service.CreateAsync(dto);
             return Ok(category);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var res = await _service.DeleteAsync(id);
+            return Ok(res);
         }
 
     }

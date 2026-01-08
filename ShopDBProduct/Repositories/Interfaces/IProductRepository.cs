@@ -1,5 +1,4 @@
 ﻿using ShopDBProduct.Entities;
-using ShopDBProduct.Migrations;
 
 namespace ShopDBProduct.Repositories.Interfaces
 {

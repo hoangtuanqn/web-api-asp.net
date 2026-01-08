@@ -27,8 +27,12 @@ namespace ShopDBProduct.Services.Implementations
 
         public async Task<bool?> DeleteAsync(int id)
         {
-            var result = await _repo.DeleteAsync(id);
-            return result;
+            if (await _repo.DeleteAsync(id) == false)
+            {
+                throw new Exception($"Không thể xóa danh mục có Id: {id}");
+            }
+
+            return true;
         }
 
         public async Task<IEnumerable<CategoryDto>> GetAllAsync()
@@ -37,14 +41,15 @@ namespace ShopDBProduct.Services.Implementations
             return categories.Select(MapToDto);
         }
 
-        public async Task<CategoryDto?> GetDetailByIdAsync(int id)
+        public async Task<CategoryDetailDto?> GetDetailByIdAsync(int id)
         {
-            var category = await _repo.GetByIdAsync(id);
+            //var category = await _repo.GetByIdAsync(id);
+            var category = await _repo.GetByIdWithProductsAsync(id);
             if (category == null)
             {
                 throw new ArgumentException($"Không tìm thấy Category với Id {id}");
             }
-            return MapToDto(category);
+            return MapToHasProductDto(category);
         }
 
         public Task<CategoryDto> UpdateByIdAsync(UpdateProductDto product)
@@ -60,6 +65,28 @@ namespace ShopDBProduct.Services.Implementations
                 Name = category.Name,
                 Description = category.Description,
                 Status = category.Status,
+            };
+        }
+        private static ProductDto MapProductToDto(Product product)
+        {
+            return new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Image = product.Image,
+                Price = product.Price,
+                Quantity = product.Quantity,
+            };
+        }
+        private static CategoryDetailDto MapToHasProductDto(Category category)
+        {
+            return new CategoryDetailDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                Status = category.Status,
+                Products = category.Products.Select(MapProductToDto).ToList()
             };
         }
     }

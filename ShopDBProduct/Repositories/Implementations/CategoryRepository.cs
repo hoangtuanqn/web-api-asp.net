@@ -37,9 +37,9 @@ namespace ShopDBProduct.Repositories.Implementations
             return product;
         }
 
-        public async Task<List<Category>?> GetByIdWithProductsAsync(int id)
+        public async Task<Category?> GetByIdWithProductsAsync(int id)
         {
-            var productsInCategory = await _context.Category.Include(c => c.Products).AsNoTracking().ToListAsync();
+            var productsInCategory = await _context.Category.Include(c => c.Products).AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
             return productsInCategory;
         }
 
