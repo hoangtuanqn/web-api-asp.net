@@ -8,18 +8,18 @@ namespace ShopDBProduct.Services.Implementations
 {
     public class OrderService : IOrderService
     {
-        private readonly IProductService _productService;
+        private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly AppDbContext _context;
         public OrderService(
-            IProductService productService,
+            IProductRepository productRepository,
             IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
             AppDbContext context
             )
         {
-            _productService = productService;
+            _productRepository = productRepository;
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _context = context;
@@ -34,7 +34,7 @@ namespace ShopDBProduct.Services.Implementations
                 decimal total = 0;
                 foreach (var item in dto.Items)
                 {
-                    var product = await _productService.GetDetailByIdAsync(item.ProductId);
+                    var product = await _productRepository.GetDetailByIdAsync(item.ProductId);
                     if (product == null)
                         throw new KeyNotFoundException($"Không tìm thấy product có id {item.ProductId}");
                     if(product.Quantity < item.Quantity)
