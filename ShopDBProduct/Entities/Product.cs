@@ -11,7 +11,7 @@ namespace ShopDBProduct.Entities
         public required int Quantity { get; set; } = 0;
 
         // Foreign Key
-        public int CategoryId { get; set; }
+        public required int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
-    } 
+    }
 }

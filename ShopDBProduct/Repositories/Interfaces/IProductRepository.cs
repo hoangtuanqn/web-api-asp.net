@@ -12,6 +12,6 @@ namespace ShopDBProduct.Repositories.Interfaces
         Task<bool> DeleteAsync(int id);
 
 
-        Task<bool> SaveChangesAsync();
+        Task SaveChangesAsync();
     }
 }

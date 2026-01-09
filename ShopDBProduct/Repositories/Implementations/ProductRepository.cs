@@ -14,7 +14,7 @@ namespace ShopDBProduct.Repositories.Implementations
         }
         public async Task<Product> CreateAsync(Product product)
         {
-            _context.Products.Add(product);
+            await _context.Products.AddAsync(product);
             return product;
         }
 
@@ -41,9 +41,9 @@ namespace ShopDBProduct.Repositories.Implementations
         {
             _context.Products.Update(product);
         }
-        public async Task<bool> SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
         }
 
     }
