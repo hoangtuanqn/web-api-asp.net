@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShopDBProduct.Data;
 using ShopDBProduct.Entities;
 using ShopDBProduct.Repositories.Interfaces;
 
@@ -6,14 +7,14 @@ namespace ShopDBProduct.Repositories.Implementations
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly IOrderRepository _context;
-        public OrderRepository(IOrderRepository repo)
+        private readonly AppDbContext _context;
+        public OrderRepository(AppDbContext context)
         {
-            _context = repo;
+            _context = context;
         }
         public async Task AddAsysnc(Order order)
         {
-            await _context.AddAsysnc(order);
+            await _context.Orders.AddAsync(order);
         }
         public async Task SaveChangesAsync()
         {

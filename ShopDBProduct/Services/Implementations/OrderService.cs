@@ -50,7 +50,7 @@ namespace ShopDBProduct.Services.Implementations
                     total += product.Price * item.Quantity;
                 }
 
-                order.Price = total;
+                order.TotalAmount = total;
                 await _orderRepository.AddAsysnc(order);
                 await _unitOfWork.SaveChangeAsync();
                 await transaction.CommitAsync();
