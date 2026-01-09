@@ -61,7 +61,7 @@ namespace ShopDBProduct.Services.Implementations
             }
             if (dto.Name != null) category.Name = dto.Name;
             if (dto.Description != null) category.Description = dto.Description;
-            if(dto.Status.HasValue) category.Status = dto.Status.Value;
+            if (dto.Status.HasValue) category.Status = dto.Status.Value;
             await _repo.SaveChangesAsync();
             return MapToDto(category);
         }

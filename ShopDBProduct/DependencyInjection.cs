@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShopDBProduct.Data;
 using ShopDBProduct.Repositories.Implementations;
 using ShopDBProduct.Repositories.Interfaces;
