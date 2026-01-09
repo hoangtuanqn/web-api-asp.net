@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace ShopDBProduct
+namespace ShopDBProduct.Utils
 {
     public static class Helpers
     {

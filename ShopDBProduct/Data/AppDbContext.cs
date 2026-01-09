@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopDBProduct.Entities;
+using ShopDBProduct.Utils;
 
 namespace ShopDBProduct.Data
 {
