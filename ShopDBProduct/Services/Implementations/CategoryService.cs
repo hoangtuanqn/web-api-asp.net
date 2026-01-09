@@ -29,7 +29,7 @@ namespace ShopDBProduct.Services.Implementations
         {
             if (await _repo.DeleteAsync(id) == false)
             {
-                throw new Exception($"Không thể xóa danh mục có Id: {id}");
+                throw new ArgumentException($"Không thể xóa danh mục có Id: {id}");
             }
 
             return true;
@@ -44,7 +44,7 @@ namespace ShopDBProduct.Services.Implementations
         public async Task<CategoryDetailDto?> GetDetailByIdAsync(int id)
         {
             //var category = await _repo.GetByIdAsync(id);
-            var category = await _repo.GetByIdWithProductsAsync(id);
+            var category = await _repo.GetByIdAsync(id);
             if (category == null)
             {
                 throw new ArgumentException($"Không tìm thấy Category với Id {id}");

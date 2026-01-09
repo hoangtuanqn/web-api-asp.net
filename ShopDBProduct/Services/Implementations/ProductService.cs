@@ -21,6 +21,8 @@ namespace ShopDBProduct.Services.Implementations
                 Image = dto.Image,
                 Price = dto.Price,
                 Quantity = dto.Quantity,
+                CategoryId = dto.CategoryId
+
             });
             await _repo.SaveChangesAsync();
             return MapToDto(product);
@@ -42,7 +44,7 @@ namespace ShopDBProduct.Services.Implementations
             var product = await _repo.GetDetailByIdAsync(id);
             if (product == null)
             {
-                throw new Exception("Product not found! OK =))");
+                throw new ArgumentException("Product not found! OK =))");
             }
             return MapToDto(product);
         }
@@ -52,7 +54,7 @@ namespace ShopDBProduct.Services.Implementations
             var product = await _repo.GetDetailByIdAsync(dto.Id);
             if (product == null)
             {
-                throw new Exception("Product not found! OK =))");
+                throw new ArgumentException("Product not found! OK =))");
             }
             product.Name = dto.Name;
             product.Price = dto.Price;

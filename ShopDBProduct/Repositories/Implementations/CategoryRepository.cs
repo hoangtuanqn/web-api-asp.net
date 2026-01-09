@@ -15,7 +15,8 @@ namespace ShopDBProduct.Repositories.Implementations
         }
         public async Task<Category> CreateAsync(Category category)
         {
-            _context.Category.Add(category);
+            await _context.Category.AddAsync(category);
+            _context.SaveChanges();
             return category;
         }
 
@@ -31,13 +32,8 @@ namespace ShopDBProduct.Repositories.Implementations
             return products;
         }
 
-        public async Task<Category?> GetByIdAsync(int id)
-        {
-            var product = await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
-            return product;
-        }
 
-        public async Task<Category?> GetByIdWithProductsAsync(int id)
+        public async Task<Category?> GetByIdAsync(int id)
         {
             var productsInCategory = await _context.Category.Include(c => c.Products).AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
             return productsInCategory;
@@ -49,14 +45,14 @@ namespace ShopDBProduct.Repositories.Implementations
             return category;
         }
 
-        public async Task<bool> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
 
         public void Update(Category category)
         {
             _context.Category.Update(category);
+        }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
