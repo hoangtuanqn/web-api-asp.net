@@ -8,7 +8,6 @@ namespace ShopDBProduct.Repositories.Interfaces
         Task<List<Product>> GetAllAsync();
         Task<Product?> GetDetailByIdAsync(int id);
         Task<Product> CreateAsync(Product product);
-        void Update(Product product);
         Task<bool> DeleteAsync(int id);
 
 

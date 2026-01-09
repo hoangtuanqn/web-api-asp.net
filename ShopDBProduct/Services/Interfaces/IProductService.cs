@@ -7,7 +7,7 @@ namespace ShopDBProduct.Services.Interfaces
     {
         public Task<IEnumerable<ProductDto>> GetAllAsync();
         public Task<ProductDto?> GetDetailByIdAsync(int id);
-        public Task<ProductDto> UpdateByIdAsync(UpdateProductDto product);
+        public Task<ProductDto> UpdateByIdAsync(int id, UpdateProductDto product);
         public Task<ProductDto> CreateAsync(CreateProductDto product);
         public Task<bool?> DeleteAsync(int id);
     }

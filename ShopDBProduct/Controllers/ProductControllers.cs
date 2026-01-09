@@ -37,6 +37,13 @@ namespace ShopDBProduct.Controllers
             return Ok(product);
         }
 
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateProductDto dto)
+        {
+            var product = await _service.UpdateByIdAsync(id, dto);
+            return Ok(product);
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

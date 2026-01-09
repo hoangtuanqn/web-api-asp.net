@@ -2,11 +2,12 @@
 {
     public class UpdateProductDto
     {
-        public int Id { get; set; }
 
-        public required string Name { get; set; }
-        public required string Image { get; set; }
-        public required decimal Price { get; set; } = 0;
-        public required int Quantity { get; set; } = 0;
+        public string? Name { get; set; }
+        public string? Image { get; set; }
+        public decimal? Price { get; set; } = 0;
+        public int? Quantity { get; set; } = 0;
+        public int? CategoryId { get; set; }
+
     }
 }
