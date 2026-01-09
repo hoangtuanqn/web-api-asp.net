@@ -29,7 +29,7 @@ namespace ShopDBProduct.Services.Implementations
         {
             if (await _repo.DeleteAsync(id) == false)
             {
-                throw new ArgumentException($"Không thể xóa danh mục có Id: {id}");
+                throw new KeyNotFoundException($"Không thể xóa danh mục có Id: {id}");
             }
 
             return true;
@@ -47,14 +47,23 @@ namespace ShopDBProduct.Services.Implementations
             var category = await _repo.GetByIdAsync(id);
             if (category == null)
             {
-                throw new ArgumentException($"Không tìm thấy Category với Id {id}");
+                throw new KeyNotFoundException($"Không tìm thấy Category với Id {id}");
             }
             return MapToHasProductDto(category);
         }
 
-        public Task<CategoryDto> UpdateByIdAsync(UpdateProductDto product)
+        public async Task<CategoryDto> UpdateByIdAsync(int id, UpdateCategoryDto dto)
         {
-            throw new NotImplementedException();
+            var category = await _repo.GetByIdAsync(id);
+            if (category == null)
+            {
+                throw new KeyNotFoundException($"Không tìm thấy Category với Id {id}");
+            }
+            if (dto.Name != null) category.Name = dto.Name;
+            if (dto.Description != null) category.Description = dto.Description;
+            if(dto.Status.HasValue) category.Status = dto.Status.Value;
+            await _repo.SaveChangesAsync();
+            return MapToDto(category);
         }
 
         private static CategoryDto MapToDto(Category category)

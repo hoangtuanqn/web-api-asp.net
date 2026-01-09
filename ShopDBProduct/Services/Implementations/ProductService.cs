@@ -44,22 +44,22 @@ namespace ShopDBProduct.Services.Implementations
             var product = await _repo.GetDetailByIdAsync(id);
             if (product == null)
             {
-                throw new ArgumentException("Product not found! OK =))");
+                throw new KeyNotFoundException("Product not found! OK =))");
             }
             return MapToDto(product);
         }
 
-        public async Task<ProductDto> UpdateByIdAsync(UpdateProductDto dto)
+        public async Task<ProductDto> UpdateByIdAsync(int id, UpdateProductDto dto)
         {
-            var product = await _repo.GetDetailByIdAsync(dto.Id);
+            var product = await _repo.GetDetailByIdAsync(id);
             if (product == null)
             {
-                throw new ArgumentException("Product not found! OK =))");
+                throw new KeyNotFoundException("Product not found! OK =))");
             }
-            product.Name = dto.Name;
-            product.Price = dto.Price;
-            product.Quantity = dto.Quantity;
-            _repo.Update(product);
+            if (dto.Name != null) product.Name = dto.Name;
+            if (dto.Image != null) product.Image = dto.Image;
+            if (dto.Price.HasValue) product.Price = dto.Price.Value;
+            if (dto.Quantity.HasValue) product.Quantity = dto.Quantity.Value;
             await _repo.SaveChangesAsync();
             return MapToDto(product);
         }

@@ -33,14 +33,11 @@ namespace ShopDBProduct.Repositories.Implementations
 
         async Task<Product?> IProductRepository.GetDetailByIdAsync(int id)
         {
-            var product = await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
             return product;
         }
 
-        void IProductRepository.Update(Product product)
-        {
-            _context.Products.Update(product);
-        }
+ 
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

@@ -28,12 +28,16 @@ namespace ShopDBProduct.Repositories.Implementations
 
         public async Task<List<Category>> GetAllAsync()
         {
-            var products = await _context.Category.AsNoTracking().ToListAsync();
+            var products = await _context.Category.ToListAsync();
             return products;
         }
 
-
         public async Task<Category?> GetByIdAsync(int id)
+        {
+            var productsInCategory = await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
+            return productsInCategory;
+        }
+        public async Task<Category?> GetByIdDetailAsync(int id)
         {
             var productsInCategory = await _context.Category.Include(c => c.Products).AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
             return productsInCategory;

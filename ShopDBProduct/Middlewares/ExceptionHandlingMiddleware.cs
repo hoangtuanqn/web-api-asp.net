@@ -26,7 +26,6 @@ namespace ShopDBProduct.Middlewares
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = ex switch
                 {
-                    ArgumentException => StatusCodes.Status404NotFound,
                     KeyNotFoundException => StatusCodes.Status404NotFound,
                     _ => StatusCodes.Status500InternalServerError
                 };
