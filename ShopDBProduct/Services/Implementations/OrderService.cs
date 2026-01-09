@@ -9,18 +9,18 @@ namespace ShopDBProduct.Services.Implementations
     public class OrderService : IOrderService
     {
         private readonly IProductService _productService;
-        private readonly ICategoryService _categoryService;
+        private readonly IOrderRepository _orderRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly AppDbContext _context;
         public OrderService(
             IProductService productService,
-            ICategoryService categoryService,
+            IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
             AppDbContext context
             )
         {
             _productService = productService;
-            _categoryService = categoryService;
+            _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _context = context;
         }
@@ -51,7 +51,10 @@ namespace ShopDBProduct.Services.Implementations
                 }
 
                 order.Price = total;
-                await _
+                await _orderRepository.AddAsysnc(order);
+                await _unitOfWork.SaveChangeAsync();
+                await transaction.CommitAsync();
+                return order.Id;
             }
             catch
             {
