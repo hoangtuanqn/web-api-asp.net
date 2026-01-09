@@ -2,6 +2,6 @@
 {
     public class CreateOrderDto
     {
-        public List<CreateOrderItemDto> Items { get; set; } = 
+        public List<CreateOrderItemDto> Items { get; set; } = new List<CreateOrderItemDto>();
     }
 }
