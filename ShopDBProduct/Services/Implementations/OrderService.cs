@@ -37,7 +37,12 @@ namespace ShopDBProduct.Services.Implementations
                     var product = await _productRepository.GetDetailByIdAsync(item.ProductId);
                     if (product == null)
                         throw new KeyNotFoundException($"Không tìm thấy product có id {item.ProductId}");
-                    if(product.Quantity < item.Quantity)
+                    if(item.Quantity <= 0)
+                    {
+                        throw new ArgumentException("Số lượng mua không hợp lệ!");
+
+                    }
+                    if (product.Quantity < item.Quantity)
                     {
                         throw new InvalidOperationException("Số lượng trong kho không đủ!");
                     }
