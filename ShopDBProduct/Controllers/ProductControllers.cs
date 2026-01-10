@@ -31,7 +31,7 @@ namespace ShopDBProduct.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
         {
             var product = await _service.CreateAsync(dto);
             return Ok(product);
