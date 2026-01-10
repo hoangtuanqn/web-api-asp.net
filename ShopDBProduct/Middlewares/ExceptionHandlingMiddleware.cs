@@ -27,7 +27,9 @@ namespace ShopDBProduct.Middlewares
                 context.Response.StatusCode = ex switch
                 {
                     KeyNotFoundException => StatusCodes.Status404NotFound,
-                    InvalidOperationException => StatusCodes.Status400BadRequest,
+                    InvalidOperationException
+                    or ArgumentException => StatusCodes.Status400BadRequest,
+
                     UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
                     _ => StatusCodes.Status500InternalServerError
                 };

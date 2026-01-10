@@ -18,14 +18,14 @@ namespace ShopDBProduct.Repositories.Implementations
             return product;
         }
 
-        async Task<bool> IProductRepository.DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             // ExecuteDeleteAsync: thực thi trực tiếp xún DB luôn
             var result = await _context.Products.Where(p => p.Id == id).ExecuteDeleteAsync();
             return result > 0;
         }
 
-        async Task<List<Product>> IProductRepository.GetAllAsync()
+        public async Task<List<Product>> GetAllAsync()
         {
             var products = await _context.Products.AsNoTracking().ToListAsync();
             return products;
