@@ -1,7 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using ShopDBProduct.Data;
-using ShopDBProduct.DTOs.Products;
 using ShopDBProduct.Repositories.Implementations;
 using ShopDBProduct.Repositories.Interfaces;
 using ShopDBProduct.Services.Implementations;
@@ -41,6 +40,7 @@ namespace ShopDBProduct
             // Đăng ký tất cả các validator của Fluent trong assembly
             // Chỉ cần cài 1 cái thôi bất kỳ: CreateCategoryValidator (là nó sẽ tự hiểu hết), miễn kế thừa đúng cái AbstractionValidator là ok
             services.AddValidatorsFromAssemblyContaining<CreateCategoryValidator>();
+
 
             // Repository
             services.AddScoped<ICategoryRepository, CategoryRepository>();
