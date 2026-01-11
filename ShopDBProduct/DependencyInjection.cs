@@ -1,11 +1,12 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using ShopDBProduct.Data;
 using ShopDBProduct.Repositories.Implementations;
 using ShopDBProduct.Repositories.Interfaces;
 using ShopDBProduct.Services.Implementations;
 using ShopDBProduct.Services.Interfaces;
+using ShopDBProduct.Validator.Categories;
 using StackExchange.Redis;
-
 namespace ShopDBProduct
 {
     // phải là dạng static vì nó là method extends
@@ -36,6 +37,9 @@ namespace ShopDBProduct
             services.AddSingleton<IConnectionMultiplexer>(sp => ConnectionMultiplexer.Connect(connectStringRedis!));
 
 
+            // Đăng ký tất cả các validator của Fluent trong assembly
+            // Chỉ cần cài 1 cái thôi bất kỳ: CreateCategoryValidator (là nó sẽ tự hiểu hết), miễn kế thừa đúng cái AbstractionValidator là ok
+            services.AddValidatorsFromAssemblyContaining<CreateCategoryValidator>();
 
 
             // Repository

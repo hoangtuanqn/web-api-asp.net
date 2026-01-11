@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using ShopDBProduct.Controllers.Base;
 using ShopDBProduct.DTOs.Categories;
+using ShopDBProduct.DTOs.Products;
 using ShopDBProduct.Services.Interfaces;
 
 namespace ShopDBProduct.Controllers
@@ -10,11 +12,13 @@ namespace ShopDBProduct.Controllers
     public class CategoryControllers : BaseApiController
     {
         private readonly ILogger<CategoryControllers> _logger;
+        private readonly IValidator<CreateCategoryDto> _productValidator;
         private readonly ICategoryService _service;
-        public CategoryControllers(ILogger<CategoryControllers> logger, ICategoryService service)
+        public CategoryControllers(ILogger<CategoryControllers> logger, ICategoryService service, IValidator<CreateCategoryDto> productValidator)
         {
             _logger = logger;
             _service = service;
+            _productValidator = productValidator;
         }
 
         [HttpGet]
@@ -34,8 +38,13 @@ namespace ShopDBProduct.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto)
         {
+            var result = await _productValidator.ValidateAsync(dto);
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
             var category = await _service.CreateAsync(dto);
             return Ok(category);
         }
