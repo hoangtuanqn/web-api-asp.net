@@ -2,11 +2,11 @@
 
 namespace ShopDBProduct.Validators.Reusable
 {
-    public class NameValidator: AbstractValidator<string>
+    public static class NameRules
     {
-        public NameValidator()
+        public static IRuleBuilderOptions<T, string> ValidName<T>(this IRuleBuilder<T, string> rule) 
         {
-            RuleFor(x => x)
+            return rule
                 .NotEmpty().WithMessage("Name is required!")
                 .MaximumLength(255).WithMessage("Name must be less 255 characters long!");
         }
