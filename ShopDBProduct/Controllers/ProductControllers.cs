@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using ShopDBProduct.Controllers.Base;
 using ShopDBProduct.DTOs.Products;
 using ShopDBProduct.Services.Interfaces;
+using ShopDBProduct.Validators.Products;
 
 namespace ShopDBProduct.Controllers
 {
@@ -10,10 +12,12 @@ namespace ShopDBProduct.Controllers
     {
         private readonly ILogger<ProductControllers> _logger;
         private readonly IProductService _service;
-        public ProductControllers(ILogger<ProductControllers> logger, IProductService service)
+        private readonly IValidator<CreateProductDto> _productValidator;
+        public ProductControllers(ILogger<ProductControllers> logger, IProductService service, IValidator<CreateProductDto> productValidator)
         {
             _logger = logger;
             _service = service;
+            _productValidator = productValidator;
         }
 
         [HttpGet]
@@ -33,6 +37,11 @@ namespace ShopDBProduct.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
         {
+            var result = await _productValidator.ValidateAsync(dto);
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
             var product = await _service.CreateAsync(dto);
             return Ok(product);
         }
