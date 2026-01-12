@@ -3,11 +3,12 @@ using ShopDBProduct.Repositories.Interfaces;
 
 namespace ShopDBProduct.Repositories.Implementations
 {
+    // document: https://viblo.asia/p/04-repository-pattern-va-unit-of-work-trong-net-Ny0VGRwELPA
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        private readonly IProductRepository _productRepository;
-        private readonly IOrderRepository _orderRepository;
+        public IProductRepository _productRepository;
+        public IOrderRepository _orderRepository;
         public UnitOfWork(AppDbContext context, IProductRepository productRepository, IOrderRepository orderRepository)
         {
             _context = context;
