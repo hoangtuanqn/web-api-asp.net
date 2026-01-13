@@ -26,26 +26,16 @@ namespace ShopDBProduct.Services.Implementations
         }
         public async Task<int> CreateOrderAsync(CreateOrderDto dto)
         {
-            using var transaction = await _context.Database.BeginTransactionAsync();
+            await _unitOfWork.BeginTransaction();
             try
             {
-
                 var order = new Order();
                 decimal total = 0;
                 foreach (var item in dto.Items)
                 {
-                    var product = await _productRepository.GetByIdAsync(item.ProductId);
-                    if (product == null)
-                        throw new KeyNotFoundException($"Không tìm thấy product có id {item.ProductId}");
-                    if(item.Quantity <= 0)
-                    {
-                        throw new ArgumentException("Số lượng mua không hợp lệ!");
-
-                    }
-                    if (product.Quantity < item.Quantity)
-                    {
-                        throw new InvalidOperationException("Số lượng trong kho không đủ!");
-                    }
+                    var product = await _unitOfWork.Products.GetByIdAsync(item.ProductId) ?? throw new KeyNotFoundException($"Không tìm thấy product có id {item.ProductId}");
+                    if (item.Quantity <= 0) throw new ArgumentException("Số lượng mua không hợp lệ!");
+                    if (product.Quantity < item.Quantity) throw new InvalidOperationException("Số lượng trong kho không đủ!");
                     product.Quantity -= item.Quantity;
                     var orderItem = new OrderItem
                     {
@@ -59,14 +49,14 @@ namespace ShopDBProduct.Services.Implementations
                 }
 
                 order.TotalAmount = total;
-                await _orderRepository.AddAsysnc(order);
+                await _unitOfWork.Orders.AddAsync(order);
                 await _unitOfWork.SaveChangeAsync();
-                await transaction.CommitAsync();
+                await _unitOfWork.CommitAsync();
                 return order.Id;
             }
             catch
             {
-                await transaction.RollbackAsync();
+                await _unitOfWork.RollBackAsync();
                 throw;
             }
         }
