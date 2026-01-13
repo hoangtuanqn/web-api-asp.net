@@ -15,30 +15,19 @@ namespace ShopDBProduct.Services.Implementations
         }
         public async Task<CategoryDto> CreateAsync(CreateCategoryDto dto)
         {
-            //var category = await _repo.CreateAsync(new Category
-            //{
-            //    Name = dto.Name,
-            //    Description = dto.Description,
-            //    Status = dto.Status,
-            //});
             var category = await _repo.AddAsync(new Category
             {
                 Name = dto.Name,
                 Description = dto.Description,
                 Status = dto.Status,
             });
-            await _repo.SaveChangesAsync();
+            await _repo.AddAsync(category);
             return MapToDto(category);
         }
 
         public async Task<bool?> DeleteAsync(int id)
         {
-            //if (await _repo.DeleteAsync(id) == false)
-            //{
-            //    throw new KeyNotFoundException($"Không thể xóa danh mục có Id: {id}");
-            //}
             await _repo.DeleteAsync(id);
-
             return true;
         }
 
@@ -69,7 +58,7 @@ namespace ShopDBProduct.Services.Implementations
             if (dto.Name != null) category.Name = dto.Name;
             if (dto.Description != null) category.Description = dto.Description;
             if (dto.Status.HasValue) category.Status = dto.Status.Value;
-            await _repo.SaveChangesAsync();
+            await _repo.UpdateAsync(category);
             return MapToDto(category);
         }
 
