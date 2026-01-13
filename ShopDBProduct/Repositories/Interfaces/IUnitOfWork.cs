@@ -1,8 +1,11 @@
 ﻿namespace ShopDBProduct.Repositories.Interfaces
 {
-    // IDisposable inherit nó sẽ tự động dọn dẹp sau khi sử dụng xong
-    public interface IUnitOfWork: IDisposable
+    public interface IUnitOfWork : IDisposable
     {
+        public ICategoryRepository Categories { get; }
+        public IProductRepository Products { get; }
+        public IOrderRepository Orders { get; }
+
         public Task<int> SaveChangeAsync();
     }
 }

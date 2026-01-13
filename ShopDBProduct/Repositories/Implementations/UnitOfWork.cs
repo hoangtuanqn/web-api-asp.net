@@ -7,14 +7,25 @@ namespace ShopDBProduct.Repositories.Implementations
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        public IProductRepository _productRepository;
-        public IOrderRepository _orderRepository;
-        public UnitOfWork(AppDbContext context, IProductRepository productRepository, IOrderRepository orderRepository)
+        public IProductRepository Products { get; }
+        public ICategoryRepository Categories { get; }
+        public IOrderRepository Orders { get; }
+
+
+        public UnitOfWork(
+            AppDbContext context,
+            IProductRepository productRepository,
+            ICategoryRepository categoryRepository,
+            IOrderRepository orderRepository
+         )
         {
             _context = context;
-            _productRepository = productRepository;
-            _orderRepository = orderRepository;
+            Products = productRepository;
+            Categories = categoryRepository;
+            Orders = orderRepository;
         }
+
+
 
         public async Task<int> SaveChangeAsync()
         {
