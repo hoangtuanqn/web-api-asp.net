@@ -34,7 +34,7 @@ namespace ShopDBProduct.Services.Implementations
                 decimal total = 0;
                 foreach (var item in dto.Items)
                 {
-                    var product = await _productRepository.GetDetailByIdAsync(item.ProductId);
+                    var product = await _productRepository.GetByIdAsync(item.ProductId);
                     if (product == null)
                         throw new KeyNotFoundException($"Không tìm thấy product có id {item.ProductId}");
                     if(item.Quantity <= 0)

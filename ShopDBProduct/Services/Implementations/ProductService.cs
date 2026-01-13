@@ -15,7 +15,7 @@ namespace ShopDBProduct.Services.Implementations
         }
         public async Task<ProductDto> CreateAsync(CreateProductDto dto)
         {
-            var product = await _repo.CreateAsync(new Product
+            var product = await _repo.AddAsync(new Product
             {
                 Name = dto.Name,
                 Image = dto.Image,
@@ -24,13 +24,14 @@ namespace ShopDBProduct.Services.Implementations
                 CategoryId = dto.CategoryId
 
             });
-            await _repo.SaveChangesAsync();
+            await _repo.AddAsync(product);
             return MapToDto(product);
         }
 
         public async Task<bool?> DeleteAsync(int id)
         {
-            return await _repo.DeleteAsync(id);
+            await _repo.DeleteAsync(id);
+            return true;
         }
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
@@ -41,7 +42,7 @@ namespace ShopDBProduct.Services.Implementations
 
         public async Task<ProductDto?> GetDetailByIdAsync(int id)
         {
-            var product = await _repo.GetDetailByIdAsync(id);
+            var product = await _repo.GetByIdAsync(id);
             if (product == null)
             {
                 throw new KeyNotFoundException("Product not found! OK =))");
@@ -51,7 +52,7 @@ namespace ShopDBProduct.Services.Implementations
 
         public async Task<ProductDto> UpdateByIdAsync(int id, UpdateProductDto dto)
         {
-            var product = await _repo.GetDetailByIdAsync(id);
+            var product = await _repo.GetByIdAsync(id);
             if (product == null)
             {
                 throw new KeyNotFoundException("Product not found! OK =))");
@@ -60,7 +61,7 @@ namespace ShopDBProduct.Services.Implementations
             if (dto.Image != null) product.Image = dto.Image;
             if (dto.Price.HasValue) product.Price = dto.Price.Value;
             if (dto.Quantity.HasValue) product.Quantity = dto.Quantity.Value;
-            await _repo.SaveChangesAsync();
+            await _repo.UpdateAsync(product);
             return MapToDto(product);
         }
 
