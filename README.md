@@ -21,4 +21,4 @@
 
 4. Tạo class kế thừa lại class ở bước 2 (__GenericRepository<T\>__) và implement interface ở bước 3 (__IProductRepository__)
 
-    > public class CategoryRepository : GenericRepository<Category>, ICategoryRepository 
+    > public class ProductRepository : GenericRepository<Product\>, IProductRepository
