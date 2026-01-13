@@ -15,10 +15,11 @@ namespace ShopDBProduct.Repositories.Implementations
         {
             _context = context;
         }
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            await _context.Set<T>().AddAsync(entity);
+            var ent = await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
+            return ent.Entity;
         }
 
         public async Task DeleteAsync(int id)
