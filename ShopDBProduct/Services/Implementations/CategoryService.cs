@@ -15,7 +15,13 @@ namespace ShopDBProduct.Services.Implementations
         }
         public async Task<CategoryDto> CreateAsync(CreateCategoryDto dto)
         {
-            var category = await _repo.CreateAsync(new Category
+            //var category = await _repo.CreateAsync(new Category
+            //{
+            //    Name = dto.Name,
+            //    Description = dto.Description,
+            //    Status = dto.Status,
+            //});
+            var category = await _repo.AddAsync(new Category
             {
                 Name = dto.Name,
                 Description = dto.Description,
@@ -27,10 +33,11 @@ namespace ShopDBProduct.Services.Implementations
 
         public async Task<bool?> DeleteAsync(int id)
         {
-            if (await _repo.DeleteAsync(id) == false)
-            {
-                throw new KeyNotFoundException($"Không thể xóa danh mục có Id: {id}");
-            }
+            //if (await _repo.DeleteAsync(id) == false)
+            //{
+            //    throw new KeyNotFoundException($"Không thể xóa danh mục có Id: {id}");
+            //}
+            await _repo.DeleteAsync(id);
 
             return true;
         }
