@@ -12,7 +12,7 @@ namespace ShopDBProduct.Repositories.Implementations
         {
             _context = context;
         }
-        public async Task AddAsysnc(Order order)
+        public async Task AddAsync(Order order)
         {
             await _context.Orders.AddAsync(order);
         }
