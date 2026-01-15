@@ -1,5 +1,8 @@
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using ShopDBProduct;
 using ShopDBProduct.Middlewares;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +16,45 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplicationInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
+
+
+// JWT
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+       .AddJwtBearer(options =>
+       {
+           // app.UseAuthentication();  cần có cái này trước Authorization
+           options.TokenValidationParameters = new TokenValidationParameters
+           {
+               /*
+                    - Kiểm tra ai là người phát hành token này? Có phải server của mình hay không?
+                    - Đọc giá trị của "iss": Lấy chuỗi định danh nhà phát hành từ token
+                */
+               ValidateIssuer = true,
+
+               /*
+                    - Kiểm tra xem ai là người tạo ra token
+                    - Kiểm tra key "aud" với cái đã cấu hình trong server
+                */
+               ValidateAudience = true,
+
+               /*
+                    - Kiểm tra hạn sử dụng token
+                    - Lấy thời gian hiện tại của exp so với t/gian của server
+                */
+               ValidateLifetime = true,
+               ValidateIssuerSigningKey = true,
+
+               // thông tin cấu hình
+               ValidIssuer = jwtSettings["Issuer"],
+               ValidAudience = jwtSettings["Audience"],
+
+               // secure key
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!)),
+               ClockSkew = TimeSpan.Zero // không cho lệch giờ
+           };
+       });
 
 
 
@@ -32,7 +74,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
