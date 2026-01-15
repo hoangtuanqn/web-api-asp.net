@@ -22,7 +22,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
        {
-
+           // app.UseAuthentication();  cần có cái này trước Authorization
            options.TokenValidationParameters = new TokenValidationParameters
            {
                /*
@@ -49,7 +49,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                ValidAudience = builder.Configuration["JWT:Audience"],
 
                // secure key
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!))
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!)),
+               ClockSkew = TimeSpan.Zero // không cho lệch giờ
            };
        });
 
@@ -71,7 +72,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
