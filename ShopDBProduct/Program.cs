@@ -19,6 +19,8 @@ builder.Services.AddApplicationServices();
 
 
 // JWT
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
        {
@@ -45,11 +47,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                ValidateIssuerSigningKey = true,
 
                // thông tin cấu hình
-               ValidIssuer = builder.Configuration["JWT:Issuer"],
-               ValidAudience = builder.Configuration["JWT:Audience"],
+               ValidIssuer = jwtSettings["Issuer"],
+               ValidAudience = jwtSettings["Audience"],
 
                // secure key
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!)),
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!)),
                ClockSkew = TimeSpan.Zero // không cho lệch giờ
            };
        });
