@@ -6,7 +6,7 @@ using ShopDBProduct.Utils;
 namespace ShopDBProduct.Services.Implementations
 {
     public class AuthService : IAuthService
-    {
+    {  
         private readonly JwtTokenGenerator _jwt;
         public AuthService(JwtTokenGenerator jwt)
         {
